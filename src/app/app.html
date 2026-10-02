@@ -1,1 +1,80 @@
-<h1>Olá, Mundo!</h1>
+<div class="container-busca">
+  <header class="busca-header">
+    <h2>Consulta de Servidores</h2>
+    <p>Filtre os funcionários por nome e lotação integrada ao tribunal.</p>
+  </header>
+
+  <!-- Painel de Filtros -->
+  <div class="filtros-card">
+    <div class="filtros-grid">
+
+      <!-- Input de Nome -->
+      <div class="campo">
+        <label for="input-nome">Nome do Servidor</label>
+        <input
+          id="input-nome"
+          type="text"
+          placeholder="Digite o nome para buscar..."
+          [value]="nomeFiltroSignal()"
+          (input)="aoDigitarNome($event)"
+          (keyup.enter)="buscar()" />
+      </div>
+
+      <!-- Select de Lotação -->
+      <div class="campo">
+        <label for="select-lotacao">Lotação / Unidade</label>
+        <select
+          id="select-lotacao"
+          [value]="lotacaoSelecionadaSignal()"
+          (change)="aoMudarLotacao($event)">
+
+          <option value="Todo o Tribunal">Todo o Tribunal</option>
+
+          @for (unidade of unidadesSignal(); track unidade.siglaUnidade) {
+            <option [value]="unidade.siglaUnidade">
+              {{ `${unidade.siglaUnidade} - ${unidade.descricaoUnidade}` }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <!-- Botão de Ação -->
+      <div class="campo-botao">
+        <button (click)="buscar()" class="btn-buscar">
+          Buscar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabela de Resultados -->
+  <div class="tabela-container">
+    <table class="tabela-servidores">
+      <thead>
+        <tr>
+          <th>Matrícula</th>
+          <th>Nome do Servidor</th>
+          <th>Cargo</th>
+          <th>Lotação</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (servidor of servidoresSignal(); track servidor.titulo || $index) {
+          <tr>
+            <td class="txt-matricula">{{ servidor.matricula }}</td>
+            <td class="txt-nome">{{ servidor.nome }}</td>
+            <td>
+              <span class="badge-lotacao">{{ servidor.siglaUnidade }}</span>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="tabela-vazia">
+              Nenhum servidor encontrado para os filtros selecionados.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
