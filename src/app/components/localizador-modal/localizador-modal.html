@@ -1,0 +1,55 @@
+<div class="modal-overlay" *ngIf="isOpen" (click)="fecharModal()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+
+    <!-- Cabeçalho -->
+    <div class="modal-header">
+      <span class="modal-title">Localizador de Servidoras e Servidores</span>
+      <button class="btn-close" (click)="fecharModal()" title="Fechar">✕</button>
+    </div>
+
+    <!-- Espaçamento cinza superior -->
+    <div class="modal-top-spacer"></div>
+
+    <!-- Corpo com lista de servidores -->
+    <div class="modal-body">
+      <!-- Caso sem resultados -->
+      <div id="LocServ_result_template_noresults" *ngIf="servidores.length === 0">
+        Desculpe, não localizamos ninguém com os dados informados.
+      </div>
+
+      <!-- Resultados encontrados -->
+      <div id="LocServ_result_template_results" *ngIf="servidores.length > 0">
+        <div class="servidor-card" *ngFor="let item of servidores">
+
+          <!-- Avatar genérico cinza -->
+          <div class="avatar-container">
+            <svg class="avatar-img" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="20" fill="#CCCCCC"/>
+              <circle cx="20" cy="15" r="7" fill="#888888"/>
+              <path d="M7 33C7 26 12 24 20 24C28 24 33 26 33 33" fill="#888888"/>
+            </svg>
+          </div>
+
+          <!-- Nome e Unidade -->
+          <div class="info-container">
+            <span class="servidor-nome">{{ item.nome }}</span>
+            <div class="servidor-unidade">{{ item.nomeUnidade }}</div>
+          </div>
+
+          <!-- Email e Ramal -->
+          <div class="contact-container">
+            <span class="servidor-email">{{ item.email }}</span>
+            <span class="servidor-ramal" *ngIf="item.ramal">{{ item.ramal }}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Rodapé -->
+    <div class="modal-footer">
+      <button type="button" class="btn-ok" (click)="fecharModal()">Ok</button>
+    </div>
+
+  </div>
+</div>
