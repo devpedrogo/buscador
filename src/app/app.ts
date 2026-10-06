@@ -6,9 +6,10 @@ import { response } from 'express';
 import { error } from 'console';
 import { ServidorService } from './service/servidor-service';
 import { Servidor } from './model/servidor';
+import { LocalizadorSearch } from './components/localizador-search/localizador-search';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, LocalizadorSearch],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
