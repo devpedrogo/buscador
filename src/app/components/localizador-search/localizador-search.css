@@ -1,0 +1,67 @@
+#LocServ_container {
+  background-color: white;
+  padding: 12px;
+  width: 260px;
+  font-family: Arial, sans-serif;
+  color: #1a365d;
+  box-sizing: border-box;
+}
+
+.coluna_titulo {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #799dcf;
+  padding-bottom: 4px;
+}
+
+.LocServ_field_container {
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.LocServ_field_container label {
+  font-size: 13px;
+  margin-bottom: 3px;
+  color: #1f3a60;
+  font-weight: bold;
+}
+
+.LocServ_field_container input,
+.LocServ_field_container select {
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid #5b82b3;
+  border-radius: 2px;
+  background-color: #f7fafc;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+#LocServ_field_container_botao {
+  align-items: center;
+  margin-top: 10px;
+}
+
+.btn-localizar {
+  background-color: #4a77b5;
+  color: #ffffff;
+  border: 1px solid #375d93;
+  border-radius: 6px;
+  padding: 4px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.LocServ_texto {
+  font-size: 13px;
+  line-height: 1.2;
+  margin-top: 10px;
+  color: #3C3C3C;
+}
+
+.LocServ_texto span{
+  color: brown;
+}

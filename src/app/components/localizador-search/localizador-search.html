@@ -1,0 +1,54 @@
+<div id="LocServ_container">
+  <div class="coluna_titulo">Localizador</div>
+
+  <form (ngSubmit)="onSubmit()">
+    <!-- Campo Nome -->
+    <div class="LocServ_field_container">
+      <label for="nome">Nome</label>
+      <input
+        type="text"
+        id="nome"
+        name="nome"
+        [ngModel]="nomeBusca()"
+        (ngModelChange)="nomeBusca.set($event)"
+      />
+    </div>
+
+    <!-- Campo Unidade de Lotação -->
+    <div class="LocServ_field_container">
+      <label for="unidade">Unidade de lotação</label>
+      <select
+        id="unidade"
+        name="unidade"
+        [ngModel]="unidadeSelecionada()"
+        (ngModelChange)="unidadeSelecionada.set($event)">
+
+        <option value="Todo o Tribunal">Todo o Tribunal</option>
+
+        @for (unidade of unidades(); track unidade.siglaUnidade) {
+          <option [value]="unidade.siglaUnidade">
+            {{ `${unidade.siglaUnidade} - ${unidade.descricaoUnidade}` }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <!-- Botão Localizar -->
+    <div id="LocServ_field_container_botao" class="LocServ_field_container">
+      <button type="submit" class="btn-localizar" [disabled]="isLoading()">
+        {{ isLoading() ? 'Buscando...' : 'Localizar 🔎' }}
+      </button>
+    </div>
+  </form>
+
+  <div class="LocServ_texto">
+    <span>Dica</span> Para localizar todas as pessoas de uma unidade, não preencha o campo "Nome".
+  </div>
+</div>
+
+<!-- Modal de Resultados integrado diretamente aqui -->
+<app-localizador-modal
+  [isOpen]="isModalAberto()"
+  [servidores]="servidoresEncontrados()"
+  (close)="fecharModal()">
+</app-localizador-modal>
