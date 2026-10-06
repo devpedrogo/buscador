@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Servidor } from '../model/servidor';
+import { environment } from '../../environments/environment.development';
 
 @Service()
 export class ServidorService {
 
   private http = inject(HttpClient);
 
-  private readonly API_URL = 'http://localhost:8085/v1/servidores';
+  private readonly API_URL = `${environment.apiUrl}/servidores`;
 
   private headers = new HttpHeaders({
     'x-api-key': 'tokenteste'
@@ -28,7 +29,7 @@ export class ServidorService {
     if (unidadeParam && unidadeParam.trim() !== '') {
       params = params.set('porLotacao', unidadeParam.trim());
     }
-    
+
     return this.http.get<Servidor[]>(this.API_URL, {headers: this.headers, params: params})
   }
 }
