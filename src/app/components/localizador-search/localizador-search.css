@@ -65,3 +65,24 @@
 .LocServ_texto span{
   color: brown;
 }
+
+/* Ajuste global do painel suspenso do Material Autocomplete */
+::ng-deep .custom-autocomplete-panel {
+  max-height: 200px !important;
+  background-color: #ffffff !important;
+  border: 1px solid #5b82b3 !important;
+  border-radius: 2px !important;
+}
+
+::ng-deep .custom-autocomplete-panel .mat-mdc-option {
+  min-height: 32px !important;
+  height: 32px !important;
+  font-size: 12px !important;
+  font-family: Arial, sans-serif !important;
+  color: #1f3a60 !important;
+  padding: 0 8px !important;
+}
+
+::ng-deep .custom-autocomplete-panel .mat-mdc-option:hover {
+  background-color: #8daeeb33 !important;
+}
