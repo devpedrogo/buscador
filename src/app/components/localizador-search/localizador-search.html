@@ -14,25 +14,36 @@
       />
     </div>
 
-    <!-- Campo Unidade de Lotação -->
+    <!-- Campo Unidade com Autocomplete e Filtro -->
     <div class="LocServ_field_container">
       <label for="unidade">Unidade de lotação</label>
-      <select
+      <input
+        type="text"
         id="unidade"
         name="unidade"
-        [ngModel]="unidadeSelecionada()"
-        (ngModelChange)="unidadeSelecionada.set($event)"
-        (focus)="onFocusUnidades()"
-        (click)="onFocusUnidades()">
+        [ngModel]="unidadeTextoInput()"
+        (ngModelChange)="onInputUnidadeChange($event)"
+        [matAutocomplete]="autoUnidade"
+        
+        (click)="onFocusUnidades()"
+        (blur)="onBlurUnidades()"
+        placeholder="Digite para filtrar..."
+        autocomplete="off"
+      />
 
-        <option value="Todo o Tribunal">Todo o Tribunal</option>
+      <mat-autocomplete #autoUnidade="matAutocomplete" (optionSelected)="onUnidadeSelecionada($event)" class="custom-autocomplete-panel">
+        <!-- Opção Geral "Todo o Tribunal" -->
+        <mat-option value="Todo o Tribunal">
+          Todo o Tribunal
+        </mat-option>
 
-        @for (unidade of unidades(); track unidade.siglaUnidade) {
-          <option [value]="unidade.siglaUnidade">
-            {{ `${unidade.siglaUnidade} - ${unidade.descricaoUnidade}` }}
-          </option>
-        }
-      </select>
+        <!-- Lista Filtrada Dinamicamente -->
+        <mat-option
+          *ngFor="let unidade of unidadesFiltradas()"
+          [value]="`${unidade.siglaUnidade} - ${unidade.descricaoUnidade}`">
+          {{ `${unidade.siglaUnidade} - ${unidade.descricaoUnidade}` }}
+        </mat-option>
+      </mat-autocomplete>
     </div>
 
     <!-- Botão Localizar -->
