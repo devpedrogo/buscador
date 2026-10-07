@@ -31,10 +31,21 @@ export class LocalizadorSearch implements OnInit {
   }
 
   carregarUnidades(): void {
+
+    // Se já tivermos unidades carregadas, não refazemos a chamada
+    if (this.unidades().length > 0) return;
+
     this.unidadeService.findAll().subscribe({
       next: (dados) => this.unidades.set(dados),
       error: (err) => console.error('Erro ao carregar unidades:', err)
     });
+  }
+
+  // Disparado no (focus) e (click) do <select>
+  onFocusUnidades(): void {
+    if (this.unidades().length === 0) {
+      this.carregarUnidades();
+    }
   }
 
   onSubmit(): void {

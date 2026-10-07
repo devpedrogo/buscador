@@ -21,7 +21,9 @@
         id="unidade"
         name="unidade"
         [ngModel]="unidadeSelecionada()"
-        (ngModelChange)="unidadeSelecionada.set($event)">
+        (ngModelChange)="unidadeSelecionada.set($event)"
+        (focus)="onFocusUnidades()"
+        (click)="onFocusUnidades()">
 
         <option value="Todo o Tribunal">Todo o Tribunal</option>
 
