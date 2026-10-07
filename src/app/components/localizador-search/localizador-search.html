@@ -35,20 +35,17 @@
 
     <!-- Botão Localizar -->
     <div id="LocServ_field_container_botao" class="LocServ_field_container">
-      <button type="submit" class="btn-localizar" [disabled]="isLoading()">
+      <button
+        type="submit"
+        class="btn-localizar"
+        [disabled]="isLoading()">
         {{ isLoading() ? 'Buscando...' : 'Localizar 🔎' }}
       </button>
     </div>
   </form>
 
   <div class="LocServ_texto">
-    <span>Dica</span> Para localizar todas as pessoas de uma unidade, não preencha o campo "Nome".
+    <span>Dica:</span> Para localizar todas as pessoas de uma unidade, não preencha o campo "Nome".
   </div>
 </div>
 
-<!-- Modal de Resultados integrado diretamente aqui -->
-<app-localizador-modal
-  [isOpen]="isModalAberto()"
-  [servidores]="servidoresEncontrados()"
-  (close)="fecharModal()">
-</app-localizador-modal>

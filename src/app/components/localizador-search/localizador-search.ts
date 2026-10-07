@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ServidorService } from '../../service/servidor-service';
 import { Servidor } from '../../model/servidor';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { LocalizadorModal } from '../localizador-modal/localizador-modal';
 
 @Component({
-  imports: [CommonModule, FormsModule, LocalizadorModal],
+  imports: [CommonModule, FormsModule, MatDialogModule],
   selector: 'app-localizador-search',
   styleUrl: './localizador-search.css',
   templateUrl: './localizador-search.html',
@@ -17,17 +18,12 @@ export class LocalizadorSearch implements OnInit {
 
   private unidadeService = inject(UnidadeService);
   private servidorService = inject(ServidorService);
+  private dialog = inject(MatDialog);
 
-  // --- Form State ---
   nomeBusca = signal<string>('');
   unidadeSelecionada = signal<string>('Todo o Tribunal');
 
-  // --- Data Signals ---
   unidades = signal<Unidade[]>([]);
-  servidoresEncontrados = signal<Servidor[]>([]);
-
-  // --- UI Signals ---
-  isModalAberto = signal<boolean>(false);
   isLoading = signal<boolean>(false);
 
   ngOnInit(): void {
@@ -46,20 +42,23 @@ export class LocalizadorSearch implements OnInit {
 
     this.servidorService.findServidores(this.nomeBusca(), this.unidadeSelecionada()).subscribe({
       next: (dados) => {
-        this.servidoresEncontrados.set(dados);
         this.isLoading.set(false);
-        this.isModalAberto.set(true);
+        this.abrirModalResultados(dados);
       },
       error: (err) => {
         console.error('Erro na busca de servidores:', err);
-        this.servidoresEncontrados.set([]);
         this.isLoading.set(false);
-        this.isModalAberto.set(true);
+        this.abrirModalResultados([]);
       }
     });
   }
 
-  fecharModal(): void {
-    this.isModalAberto.set(false);
+  private abrirModalResultados(servidores: Servidor[]): void {
+    this.dialog.open(LocalizadorModal, {
+      data: servidores,
+      width: '90%',         // Ocupa 100% da largura disponível em dispositivos móveis
+      maxWidth: '520px',
+      panelClass: 'custom-localizador-dialog'
+    });
   }
 }
