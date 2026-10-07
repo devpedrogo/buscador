@@ -1,78 +1,60 @@
-/* Fundo escurecido atrás do modal */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  font-family: Arial, Helvetica, sans-serif;
+/* Ajuste do container global do dialog no Angular Material */
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  padding: 0 !important;
+  border-radius: 6px !important;
+  background-color: #ededed !important;
+  overflow: hidden !important;
+  border: 1px solid #7a7a7a;
+  box-sizing: border-box;
 }
 
-/* Caixa principal do Modal */
-.modal-dialog {
-  background-color: #ededed; /* Cor da borda externa / rodapé */
-  border-radius: 6px;
-  width: 620px;
-  max-width: 95vw;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-  overflow: hidden;
-  border: 1px solid #7a7a7a;
-}
 
 /* Cabeçalho Azul Escuro */
 .modal-header {
-  background-color: #1a3b70; /* Azul escuro idêntico à imagem */
+  background-color: #1a3b70;
   color: #ffffff;
-  padding: 8px 14px;
+  padding: 6px 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 14px;
-  font-weight: bold;
 }
 
 .modal-title {
-  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
   letter-spacing: 0.2px;
 }
 
 .btn-close {
-  background: transparent;
-  border: none;
-  color: #9cb1d6;
-  font-size: 16px;
-  font-weight: normal;
-  cursor: pointer;
-  line-height: 1;
-  padding: 0;
+  color: #9cb1d6 !important;
+  width: 28px !important;
+  height: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .btn-close:hover {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
-/* Faixa superior de espaçamento cinza claro */
+/* Espaçamento cinza superior */
 .modal-top-spacer {
-  height: 16px;
+  height: 14px;
   background-color: #ededed;
 }
 
-/* Corpo principal branco onde ficam os cards */
+/* Corpo do Dialog contendo os cards */
 .modal-body {
-  max-height: 380px;
-  overflow-y: auto;
-  background-color: #ffffff;
-  padding: 0 16px;
+  max-height: 380px !important;
+  background-color: #ffffff !important;
+  padding: 0 16px !important;
+  margin: 0 !important;
   border-top: 1px solid #dcdcdc;
   border-bottom: 1px solid #dcdcdc;
 }
 
-/* Container do item/card */
+/* Card individual */
 .servidor-card {
   display: flex;
   align-items: center;
@@ -84,9 +66,8 @@
   border-bottom: none;
 }
 
-/* Avatar circular simples */
 .avatar-container {
-  width: 48px;
+  width: 44px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -94,13 +75,11 @@
 }
 
 .avatar-img {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  object-fit: cover;
 }
 
-/* Informações da esquerda: Nome e Unidade */
 .info-container {
   flex: 1;
   padding-left: 12px;
@@ -122,7 +101,6 @@
   line-height: 1.3;
 }
 
-/* Informações da direita: Email e Ramal */
 .contact-container {
   text-align: right;
   min-width: 150px;
@@ -135,9 +113,7 @@
 .servidor-email {
   font-size: 12px;
   color: #1d4ed8;
-  text-decoration: none;
   font-weight: bold;
-  word-break: break-all;
 }
 
 .servidor-ramal {
@@ -147,7 +123,6 @@
   margin-top: 3px;
 }
 
-/* Mensagem de Sem Resultados */
 #LocServ_result_template_noresults {
   padding: 24px;
   text-align: center;
@@ -155,24 +130,43 @@
   font-size: 13px;
 }
 
-/* Rodapé cinza claro com botão Ok */
+/* Rodapé e botão Ok */
 .modal-footer {
-  padding: 8px 16px;
-  background-color: #ededed;
-  text-align: right;
+  padding: 8px 16px !important;
+  background-color: #ededed !important;
+  margin: 0 !important;
+  min-height: auto !important;
 }
 
 .btn-ok {
-  background: linear-gradient(to bottom, #ffffff 0%, #e1e1e1 100%);
-  border: 1px solid #a6a6a6;
-  border-radius: 4px;
-  padding: 3px 22px;
-  font-size: 12px;
-  color: #000000;
-  cursor: pointer;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to bottom, #ffffff 0%, #e1e1e1 100%) !important;
+  border: 1px solid #a6a6a6 !important;
+  border-radius: 4px !important;
+  padding: 0 20px !important;
+  height: 28px !important;
+  line-height: 26px !important;
+  font-size: 12px !important;
+  color: #000000 !important;
+  min-width: unset !important;
 }
 
 .btn-ok:hover {
-  background: linear-gradient(to bottom, #f5f5f5 0%, #d8d8d8 100%);
+  background: linear-gradient(to bottom, #f5f5f5 0%, #d8d8d8 100%) !important;
+}
+
+
+/* Garante adaptação da linha do card em ecrãs muito pequenos */
+@media (max-width: 480px) {
+  .servidor-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .contact-container {
+    text-align: left;
+    align-items: flex-start;
+    padding-left: 56px; /* Alinha visualmente com o nome após o avatar */
+    min-width: unset;
+  }
 }
