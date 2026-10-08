@@ -170,3 +170,45 @@
     min-width: unset;
   }
 }
+
+/* Layout da linha Nome + Botão */
+.nome-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Layout da linha E-mail + Botão */
+.email-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+/* Botão de Cópia Pequeno e Discreto */
+.btn-copy {
+  width: 22px !important;
+  height: 22px !important;
+  line-height: 22px !important;
+  padding: 0 !important;
+  opacity: 0.6;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.servidor-card:hover .btn-copy,
+.btn-copy:hover {
+  opacity: 1;
+}
+
+/* Ícone de Cópia */
+.copy-icon {
+  font-size: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+  color: #555555;
+}
+
+.btn-copy:hover .copy-icon {
+  color: #1a3b70;
+}
