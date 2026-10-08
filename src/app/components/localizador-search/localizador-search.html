@@ -10,8 +10,33 @@
         id="nome"
         name="nome"
         [ngModel]="nomeBusca()"
-        (ngModelChange)="nomeBusca.set($event)"
+        (ngModelChange)="onInputNomeChange($event)"
+        [matAutocomplete]="autoNome"
+        placeholder="Digite o nome do servidor"
+        autocomplete="off"
+        panelWidth="100%"
       />
+
+      <mat-autocomplete
+        #autoNome="matAutocomplete"
+        (optionSelected)="onNomeSelecionado($event)"
+        class="custom-autocomplete-panel">
+
+        <mat-option *ngIf="isCarregandoNomes()" disabled>
+          Buscando servidores...
+        </mat-option>
+
+        <mat-option
+          *ngFor="let nome of sugestoesNome()"
+          [value]="nome">
+          {{ nome }}
+        </mat-option>
+
+        <!-- Sem resultados -->
+        <mat-option *ngIf="!isCarregandoNomes() && sugestoesNome().length === 0 && nomeBusca().trim().length >= 1" disabled>
+          Nenhum servidor encontrado
+        </mat-option>
+      </mat-autocomplete>
     </div>
 
     <!-- Campo Unidade com Autocomplete e Filtro -->
@@ -24,14 +49,19 @@
         [ngModel]="unidadeTextoInput()"
         (ngModelChange)="onInputUnidadeChange($event)"
         [matAutocomplete]="autoUnidade"
-        
+
         (click)="onFocusUnidades()"
         (blur)="onBlurUnidades()"
-        placeholder="Digite para filtrar..."
+        placeholder="Digite o nome da unidade"
         autocomplete="off"
       />
 
-      <mat-autocomplete #autoUnidade="matAutocomplete" (optionSelected)="onUnidadeSelecionada($event)" class="custom-autocomplete-panel">
+      <mat-autocomplete
+        #autoUnidade="matAutocomplete"
+        (optionSelected)="onUnidadeSelecionada($event)"
+        panelWidth="380px"
+        class="custom-autocomplete-panel">
+
         <!-- Opção Geral "Todo o Tribunal" -->
         <mat-option value="Todo o Tribunal">
           Todo o Tribunal
