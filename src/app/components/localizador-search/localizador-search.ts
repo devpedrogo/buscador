@@ -9,6 +9,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { LocalizadorModal } from '../localizador-modal/localizador-modal';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { catchError, debounceTime, distinctUntilChanged, of, Subject, switchMap } from 'rxjs';
+import { MatOptionModule } from '@angular/material/core';
 
 @Component({
   imports: [
@@ -16,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     MatDialogModule,
     MatAutocompleteModule,
+    MatOptionModule,
     MatInputModule
   ],
   selector: 'app-localizador-search',
@@ -28,13 +31,18 @@ export class LocalizadorSearch implements OnInit {
   private servidorService = inject(ServidorService);
   private dialog = inject(MatDialog);
 
-  // --- Form Signals ---
+  // --- Signals de Busca por Nome ---
   nomeBusca = signal<string>('');
-  unidadeSelecionada = signal<string>('Todo o Tribunal');
-  unidadeTextoInput = signal<string>('Todo o Tribunal'); // Texto visível no input
+  sugestoesNome = signal<string[]>([]);
+  isCarregandoNomes = signal<boolean>(false);
+  private buscaNomeSubject = new Subject<string>();
 
-  // --- Data Signals ---
+  // --- Signals de Unidades ---
+  unidadeTextoInput = signal<string>('Todo o Tribunal');
+  unidadeSelecionada = signal<string>('Todo o Tribunal');
   unidades = signal<Unidade[]>([]);
+
+  // --- Control Signals ---
   isLoading = signal<boolean>(false);
 
   // Computed Signal: Filtra as unidades em tempo real conforme o usuário digita
@@ -51,8 +59,52 @@ export class LocalizadorSearch implements OnInit {
 
   ngOnInit(): void {
     this.carregarUnidades();
+    this.configurarAutocompleteNome();
   }
 
+  // --- Métodos de Nome ---
+  private configurarAutocompleteNome(): void {
+    this.buscaNomeSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(termo => {
+        const termoLimpo = termo ? termo.trim() : '';
+        if (termoLimpo.length < 1) {
+          this.isCarregandoNomes.set(false);
+          return of([]);
+        }
+
+        this.isCarregandoNomes.set(true);
+        return this.servidorService.buscarSugestoesNome(termoLimpo).pipe(
+          catchError(() => {
+            this.isCarregandoNomes.set(false);
+            return of([]);
+          })
+        );
+      })
+    ).subscribe({
+      next: (sugestoes) => {
+        console.log('Sugestões recebidas do backend:', sugestoes);
+        this.isCarregandoNomes.set(false);
+        this.sugestoesNome.set(sugestoes);
+      },
+      error: () => {
+        this.sugestoesNome.set([]);
+        this.isCarregandoNomes.set(false);
+      }
+    });
+  }
+
+  onInputNomeChange(valor: string): void {
+    this.nomeBusca.set(valor);
+    this.buscaNomeSubject.next(valor);
+  }
+
+  onNomeSelecionado(event: MatAutocompleteSelectedEvent): void {
+    this.nomeBusca.set(event.option.value);
+  }
+
+  // --- Métodos de Unidade ---
   carregarUnidades(): void {
 
     // Se já tivermos unidades carregadas, não refazemos a chamada
