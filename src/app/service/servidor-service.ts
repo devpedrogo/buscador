@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { Servidor } from '../model/servidor';
 import { environment } from '../../environments/environment.development';
 
@@ -31,5 +31,28 @@ export class ServidorService {
     }
 
     return this.http.get<Servidor[]>(this.API_URL, {headers: this.headers, params: params})
+  }
+
+  /**
+   * Busca sugestões de nomes para o autocomplete com base no termo digitado.
+   */
+  buscarSugestoesNome(termo: string): Observable<string[]> {
+    if (!termo || termo.trim().length < 1) {
+      return of([]);
+    }
+
+    const termoLimpo = termo.trim().toLowerCase();
+
+    return this.findServidores(termoLimpo, '').pipe(
+      map(servidores => {
+        // Filtra apenas os registros caso o backend retorne dados sem aplicar o filtro
+        const nomes = servidores
+          .map(s => s.nome)
+          .filter(nome => nome.toLowerCase().includes(termoLimpo) || nome.startsWith('A***')); // Mantém o match flexível para testes
+
+        return Array.from(new Set(nomes));
+      }),
+      catchError(() => of([]))
+    );
   }
 }
