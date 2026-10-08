@@ -66,21 +66,35 @@
   color: brown;
 }
 
-/* Ajuste global do painel suspenso do Material Autocomplete */
+/* Painel do Autocomplete expandido e responsivo */
 ::ng-deep .custom-autocomplete-panel {
-  max-height: 200px !important;
+  max-height: 250px !important;
+  min-width: 380px !important; /* Expande o dropdown para fora do container se necessário */
+  max-width: 90vw !important;  /* Impede de estourar a tela em monitores menores */
   background-color: #ffffff !important;
   border: 1px solid #5b82b3 !important;
   border-radius: 2px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
 }
 
+/* Opções com suporte a texto longo e múltiplas linhas */
 ::ng-deep .custom-autocomplete-panel .mat-mdc-option {
-  min-height: 32px !important;
-  height: 32px !important;
+  min-height: 34px !important;
+  height: auto !important; /* Permite que o item cresça se o nome for gigante */
+  padding: 6px 10px !important;
   font-size: 12px !important;
   font-family: Arial, sans-serif !important;
   color: #1f3a60 !important;
-  padding: 0 8px !important;
+  white-space: normal !important; /* Habilita quebra de linha para nomes longos */
+  line-height: 1.3 !important;
+}
+
+/* Garante que o container de texto interno da opção do Material aceite a quebra de linha */
+::ng-deep .custom-autocomplete-panel .mat-mdc-option .mdc-list-item__primary-text {
+  white-space: normal !important;
+  word-break: break-word !important;
+  color: #1f3a60 !important;
+  font-size: 12px !important;
 }
 
 ::ng-deep .custom-autocomplete-panel .mat-mdc-option:hover {
