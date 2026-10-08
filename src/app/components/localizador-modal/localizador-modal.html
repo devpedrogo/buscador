@@ -28,13 +28,31 @@
 
       <!-- Nome e Unidade -->
       <div class="info-container">
-        <span class="servidor-nome">{{ item.nome }}</span>
+        <div class="nome-wrapper">
+          <span class="servidor-nome">{{ item.nome }}</span>
+          <button
+            mat-icon-button
+            class="btn-copy"
+            matTooltip="Copiar nome"
+            (click)="copiarTexto(item.nome, 'Nome')">
+            <mat-icon class="copy-icon">content_copy</mat-icon>
+          </button>
+        </div>
         <div class="servidor-unidade">{{ item.nomeUnidade }}</div>
       </div>
 
       <!-- E-mail e Ramal -->
       <div class="contact-container">
-        <span class="servidor-email">{{ item.email }}</span>
+        <div class="email-wrapper" *ngIf="item.email">
+          <span class="servidor-email">{{ item.email }}</span>
+          <button
+            mat-icon-button
+            class="btn-copy"
+            matTooltip="Copiar e-mail"
+            (click)="copiarTexto(item.email, 'E-mail')">
+            <mat-icon class="copy-icon">content_copy</mat-icon>
+          </button>
+        </div>
         <span class="servidor-ramal" *ngIf="item.ramal">{{ item.ramal }}</span>
       </div>
 
