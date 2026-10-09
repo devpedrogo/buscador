@@ -212,3 +212,56 @@
 .btn-copy:hover .copy-icon {
   color: #1a3b70;
 }
+
+/* Container de Pílulas - Travado em exatamente 2 linhas */
+.pilulas-container {
+  background-color: #f8fafc;
+  padding: 6px 10px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-height: 64px; /* Limita a exatamente 2 linhas visíveis */
+  overflow-y: auto; /* Permite scroll vertical se houver dezenas de pílulas */
+  box-sizing: border-box;
+}
+
+/* Scrollbar ultra discreta */
+.pilulas-container::-webkit-scrollbar {
+  width: 4px;
+}
+.pilulas-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Estilo do Botão Pílula */
+.pilula-btn {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-family: inherit;
+  color: #475569;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  outline: none;
+  line-height: 1.2;
+}
+
+.pilula-btn:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #1e293b;
+}
+
+/* Pílula Ativa (Filtro Selecionado) em Azul Oficial */
+.pilula-btn.ativa {
+  background-color: #1a3b70 !important;
+  border-color: #1a3b70 !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}

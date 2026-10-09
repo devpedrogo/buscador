@@ -5,7 +5,29 @@
   </button>
 </div>
 
-<div class="modal-top-spacer"></div>
+<!-- Container de Pílulas de Unidade -->
+<div class="pilulas-container" *ngIf="temMultiplasUnidades()">
+
+  <button
+    type="button"
+    class="pilula-btn"
+    [class.ativa]="unidadeSelecionada() === 'TODAS'"
+    (click)="selecionarUnidade('TODAS')">
+    Todas ({{ servidores.length }})
+  </button>
+
+  <button
+    type="button"
+    *ngFor="let item of unidadesComContagem()"
+    class="pilula-btn"
+    [class.ativa]="unidadeSelecionada() === item.sigla"
+    (click)="selecionarUnidade(item.sigla)">
+    {{ item.sigla }} ({{ item.quantidade }})
+  </button>
+
+</div>
+
+<div class="modal-top-spacer" *ngIf="!temMultiplasUnidades()"></div>
 
 <mat-dialog-content class="modal-body">
   <!-- Caso sem resultados -->
@@ -15,7 +37,7 @@
 
   <!-- Lista de resultados -->
   <div id="LocServ_result_template_results" *ngIf="servidores.length > 0">
-    <div class="servidor-card" *ngFor="let item of servidores">
+    <div class="servidor-card" *ngFor="let item of servidoresFiltrados()">
 
       <!-- Avatar SVG Genérico -->
       <div class="avatar-container">
