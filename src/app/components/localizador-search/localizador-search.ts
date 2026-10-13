@@ -190,8 +190,9 @@ export class LocalizadorSearch implements OnInit {
   private abrirModalResultados(servidores: Servidor[]): void {
     this.dialog.open(LocalizadorModal, {
       data: servidores,
-      width: '90%',         // Ocupa 100% da largura disponível em dispositivos móveis
-      maxWidth: '520px',
+      width: '720px',
+      maxWidth: '95vw', // Responsivo no mobile (usa 95% da tela)
+      maxHeight: '90vh',
       panelClass: 'custom-localizador-dialog'
     });
   }
