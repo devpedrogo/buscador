@@ -109,6 +109,22 @@ export class LocalizadorModal {
   fecharModal(): void {
     this.dialogRef.close();
   }
+
+  abrirChatPidgin(titulo: string): void {
+    if (!titulo) return;
+
+    // Limpa o título de eleitor mantendo apenas os números
+    const tituloLimpo = titulo.replace(/\D/g, '').trim();
+
+    // Domínio oficial do servidor Jabber/XMPP do Pidgin
+    const dominioXmpp = 'chat.tre-se.gov.br';
+
+    // Monta a URI do protocolo XMPP
+    const uriPidgin = `xmpp:${tituloLimpo}@${dominioXmpp}?message`;
+
+    // Invoca o Pidgin no sistema operacional
+    window.location.href = uriPidgin;
+  }
 }
 
 export interface UnidadeContador {
