@@ -76,6 +76,16 @@
           </button>
         </div>
         <span class="servidor-ramal" *ngIf="item.ramal">{{ item.ramal }}</span>
+
+        <!-- Botão de Chat com o Pidgin -->
+        <button
+          type="button"
+          class="btn-chat-pidgin"
+          matTooltip="Iniciar conversa no Pidgin"
+          (click)="abrirChatPidgin(item.titulo)">
+          <mat-icon class="chat-icon">chat_bubble_outline</mat-icon>
+          <span>Chat</span>
+        </button>
       </div>
 
     </div>
