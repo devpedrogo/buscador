@@ -77,15 +77,28 @@
         </div>
         <span class="servidor-ramal" *ngIf="item.ramal">{{ item.ramal }}</span>
 
-        <!-- Botão de Chat com o Pidgin -->
-        <button
-          type="button"
-          class="btn-chat-pidgin"
-          matTooltip="Iniciar conversa no Pidgin"
-          (click)="abrirChatPidgin(item.titulo)">
-          <mat-icon class="chat-icon">chat_bubble_outline</mat-icon>
-          <span>Chat</span>
-        </button>
+        <div class="buttons-group">
+          <!-- Botão VoIP -->
+          <button
+            type="button"
+            class="btn-action btn-voip"
+            matTooltip="Ligar para o ramal via VoIP"
+            *ngIf="item.ramal"
+            (click)="chamarRamalVoip(item.ramal)">
+            <mat-icon class="action-icon">phone</mat-icon>
+            <span>Ligar</span>
+          </button>
+
+          <!-- Botão Pidgin Chat -->
+          <button
+            type="button"
+            class="btn-action btn-chat"
+            matTooltip="Iniciar conversa no Pidgin"
+            (click)="abrirChatPidgin(item.titulo || item.email)">
+            <mat-icon class="action-icon">chat_bubble_outline</mat-icon>
+            <span>Chat</span>
+          </button>
+        </div>
       </div>
 
     </div>
