@@ -125,6 +125,23 @@ export class LocalizadorModal {
     // Invoca o Pidgin no sistema operacional
     window.location.href = uriPidgin;
   }
+
+  /**
+   * Dispara uma chamada VoIP para o ramal do servidor usando o Softphone padrão do SO.
+   */
+  chamarRamalVoip(ramal: string): void {
+    if (!ramal) return;
+
+    // Limpa caracteres especiais, deixando apenas números
+    const ramalLimpo = ramal.replace(/\D/g, '').trim();
+    if (!ramalLimpo) return;
+
+    // Protocolo 'sip:' abre o softphone cadastrado (MicroSIP, Cisco, Asterisk, etc.)
+    // Se a infra preferir discador nativo, pode usar `tel:${ramalLimpo}`
+    const uriVoip = `sip:${ramalLimpo}`;
+
+    window.location.href = uriVoip;
+  }
 }
 
 export interface UnidadeContador {
